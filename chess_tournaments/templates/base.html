@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html ng-app="chess_app">
+<head>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/jquery.modal.css' %}">
+<link rel="stylesheet" href="{% static 'css/custom.css' %}">
+<script src="{% static 'bower_components/jquery/dist/jquery.js' %}" type="text/javascript" charset="utf-8"></script>
+<script src="{% static 'js/jquery-ui-1.10.4.custom.js' %}" type="text/javascript" charset="utf-8"></script>
+<script src="{% static 'js/jquery.modal.min.js' %}" type="text/javascript" charset="utf-8"></script>
+<script src="{% static 'bower_components/angular/angular.js' %}" type="text/javascript" charset="utf-8"></script>
+<script src="{% static 'js/custom_app.js' %}" type="text/javascript" charset="utf-8"></script>
+{% block additional_static %}
+{% endblock %}
+<title>
+    {% block title %}
+    {% endblock %}
+</title>
+</head>
+<body ng-app="chess_app">
+<div id="header">
+
+        {% block login_link %}
+            {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}">Logout</a>
+            {% else %}
+                <a href="#modal-login" rel="modal:open">Login</a>
+            {% endif %}
+        {% endblock %}
+        <a href="{% url 'tournaments' %}">Tournaments</a>
+        <a href="{% url 'participants' %}">Participants</a>
+
+</div>
+
+{% block body %}
+{% endblock %}
+
+<div id="modal-login" style="display: none">
+    <form id="login_form" method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td><label for="username">Login:</label></td>
+                <td><input type="text" id="username"></td>
+            </tr>
+            <tr>
+                <td><label for="password">Password:</label></td>
+                <td><input type="password" id="password"></td>
+            </tr>
+        </table>
+        <input id="login_button" type="submit" value="Login">
+    </form>
+</div>
+<script>
+    $('#login_button').on('click', function(event){
+        var dataString = '&username=' + $('#username').val() +
+                         '&password=' + $('#password').val() +
+                         '&csrfmiddlewaretoken=' + $('input[name=csrfmiddlewaretoken]').val();
+        var locationToReturn = window.location.href;
+        $.ajax({
+            type: "POST",
+            url: "/login/",
+            data: dataString,
+            success: function(data){
+                if (data['result'] == 'fail') {
+                    alert('Failed to login a user with entered credentials.');
+                } else {
+                    window.location.replace(locationToReturn);
+                }
+            }
+        });
+        event.preventDefault();
+    });
+</script>
+
+</body>
+</html>

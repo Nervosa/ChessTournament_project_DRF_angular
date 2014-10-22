@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Participant
+{% endblock %}
+
+{% block body %}
+    {% if not user.is_authenticated %}
+        <table border="1px" rules="all">
+        <tr>
+            <td>Name</td>
+            <td>{{ participant.name }}</td>
+        </tr>
+        <tr>
+            <td>Surname</td>
+            <td>{{ participant.surname }}</td>
+        </tr>
+        <tr>
+            <td>Age</td>
+            <td>{{ participant.age }}</td>
+        </tr>
+        <tr>
+            <td>Elo Rating</td>
+            <td>{{ participant.elo_rating }}</td>
+        </tr>
+        </table>
+    {% else %}
+        <form method="POST">
+        {% csrf_token %}
+            {% if participant_form.errors %}
+                {{ participant_form.errors }}
+            {% endif %}
+            <table rules='all' border="1px">
+                <tr>
+                    <td>Name:</td>
+                    <td>{{ participant_form.name }}</td>
+                </tr>
+                <tr>
+                    <td>Surname:</td>
+                    <td>{{ participant_form.surname }}</td>
+                </tr>
+                <tr>
+                    <td>Age:</td>
+                    <td>{{ participant_form.age }}</td>
+                </tr>
+                <tr>
+                    <td>Elo rating:</td>
+                    <td>{{ participant_form.elo_rating }}</td>
+                </tr>
+            </table>
+        <input type="submit" value="Save">
+        </form>
+    {% endif %}
+{% endblock %}

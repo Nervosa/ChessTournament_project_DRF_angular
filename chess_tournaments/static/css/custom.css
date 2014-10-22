@@ -1,0 +1,68 @@
+body {
+    margin-top: 0%;
+    margin-bottom: 0%;
+    margin-right: 10%;
+    margin-left: 10%;
+    padding: 0;
+    height: 100%;
+}
+
+html {
+    padding: 0;
+    margin-top: 0;
+    height: 100%;
+}
+
+#header {
+    width: 100%;
+    background-color: darkgrey;
+    text-align: center;
+    font-size: 200%;
+}
+
+button > a {
+    text-decoration: none;
+    color: #000000;
+}
+
+table {
+    border-collapse: collapse;
+    border: 1px solid black;
+    width: inherit;
+    }
+
+div#form-container table td {
+        border: 1px solid black;
+    }
+
+div#form-container table th {
+        border: 1px solid black;
+    }
+
+div#form-container select {
+    height: 100px;
+}
+
+#form-container {
+    background-color: lightgrey;
+    overflow: auto;
+}
+
+#tournament_form {
+    display: inline;
+    width: 330px;
+}
+
+#t_info {
+    width: 330px;
+    display: inline-table;
+}
+
+#t_points_info {
+    /*width: 330px;*/
+    display: inline-table;
+}
+
+span#tournament_id {
+    visibility: hidden;
+}

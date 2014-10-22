@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block additional_static %}
+    {% load static %}
+    {% load inplace_edit %}
+    {% inplace_static %}
+    <link href="{% static 'bower_components/angular-xeditable/dist/css/xeditable.css' %}" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="{% static 'bower_components/angular-xeditable/dist/js/xeditable.js' %}"></script>
+    <script src="{% static 'js/jquery.tablesorter.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/angular-tablesort.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/angular-cookies.js' %}" type="text/javascript"></script>
+{% endblock %}
+
+{% block title %}
+    Participants
+{% endblock %}
+
+{% block body %}
+    <b>PARTICIPANTS</b>
+    <p><i>Clicking column names will sort ascending/descending the contents of table according to pressed column name.</i></p>
+    {% if user.is_authenticated %}
+        <p><i><b>As you're a judge you can edit participants' info just clicking proper cell in a table.</b></i></p>
+        <table id="participants_table" class="tablesorter" rules='all'>
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Age</th>
+            <th>Elo rating</th>
+        </tr>
+        </thead>
+            <tbody>
+            {% for participant in participants %}
+                <tr>
+                <td>{% inplace_edit 'participant.name' %}</td>
+                <td>{% inplace_edit 'participant.surname' %}</td>
+                <td>{% inplace_edit 'participant.age' %}</td>
+                <td>{% inplace_edit 'participant.elo_rating' %}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <button><a href="{% url 'participant_new' %}">Add new participant</a></button>
+    {% else %}
+        <table id="participants_table" class="tablesorter" rules="all" border="1px">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Age</th>
+            <th>Elo rating</th>
+        </tr>
+        </thead>
+            <tbody>
+            {% for participant in participants %}
+                <tr>
+                <td>{{ participant.name }}</td>
+                <td>{{ participant.surname }}</td>
+                <td>{{ participant.age }}</td>
+                <td>{{ participant.elo_rating }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+    <hr>
+    <h1>Participants got by API</h1>
+    <div ng-controller="ParticipantsController as participants">
+
+        <table id="participants_table_api" rules="all" border="1px" ts-wrapper>
+           {% verbatim %}
+            <thead>
+                <tr>
+                    <th ts-criteria="name|lowercase">Name</th>
+                    <th ts-criteria="surname|lowercase" ts-default>Surname</th>
+                    <th ts-criteria="age|parseInt">Age</th>
+                    <th ts-criteria="elo_rating|parseFloat">Elo rating</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="participant in all_participants" ts-repeat>
+
+                <td id="participant_{[{ participant.id }]}" editable-text="participant.name" onbeforesave="updateUser($data, participant.id, participant.name, participant.surname, participant.age, participant.elo_rating)">{[{ participant.name }]}</td>
+                <td>{[{ participant.surname }]}</td>
+                <td>{[{ participant.age }]}</td>
+                <td>{[{ participant.elo_rating | number:2 }]}</td>
+            </tr>
+            </tbody>
+        </table>
+    {% endverbatim %}
+    </div>
+<script>
+var textExtractor = function(node){
+    return node.textContent;
+};
+
+$(document).ready(function()
+    {
+        $("#participants_table").tablesorter({ textExtraction: textExtractor });
+    }
+);
+</script>
+{% endblock %}

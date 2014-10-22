@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Tournaments available for view
+{% endblock %}
+
+{% block body %}
+{% if tournaments %}
+<b>TOURNAMENTS</b>
+<ol>
+{% for tournament in tournaments %}
+    <li><a href="{% url 'tournament_detail' tournament.id %}">{{ tournament }}</a></li>
+{% endfor %}
+</ol>
+
+{% else %}
+ <b>NO TOURNAMENTS FOUND</b>
+{% endif %}
+{% if user.is_authenticated %}
+    <button><a href="{% url 'tournament_new' %}">Start new tournament</a></button>
+{% endif %}
+{% endblock %}

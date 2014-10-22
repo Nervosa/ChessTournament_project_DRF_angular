@@ -1,0 +1,333 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {% if request.get_full_path == '/tournament_new/' %}
+        New tournament
+    {% elif user.is_authenticated %}
+        {{ tournament_title }}(edit mode)
+    {% else %}
+        {{ tournament.title }}
+    {% endif %}
+{% endblock %}
+
+{% block additional_static %}
+    {% load static %}
+    {% load inplace_edit %}
+    {% inplace_static %}
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+    <script type="text/javascript" src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <script src="{% static 'js/jquery.form.js' %}"></script>
+{% endblock %}
+
+{% block body %}
+<div id="form-container">
+<div id="t_info">
+    {% if not user.is_authenticated %}
+    <table id="tournament_info">
+        <tr>
+            <td>TITLE</td>
+            <td>{{ tournament.title }}</td>
+        </tr>
+        <tr>
+            <td>START</td>
+            <td>{{ tournament.start_date }}</td>
+        </tr>
+        <tr>
+            <td>END</td>
+            <td>{{ tournament.end_date }}</td>
+        </tr>
+        <tr>
+            <td>PARTICIPANTS</td>
+            <td>
+                <ul>
+                    {% for participant in participants %}
+                        <li><a href="{% url 'participant_detail' participant.id %}">{{ participant.name }} {{ participant.surname }}</a></li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+    </table>
+    {% else %}
+        <form id="tournament_form" method="POST">
+        {% csrf_token %}
+            {% if tournament_form.errors %}
+                {{ form.errors }}
+            {% endif %}
+        <table id="tournament_info">
+            <tr>
+                <td>Title:</td>
+                <td>{{ tournament_form.title }}</td>
+            </tr>
+            <tr>
+                <td>Start date:</td>
+                <td>{{ tournament_form.start_date }}</td>
+            </tr>
+            <tr>
+                <td>End date:</td>
+                <td>{{ tournament_form.end_date }}</td>
+            </tr>
+            <tr>
+                <td>Participants:</td>
+                <td>{{ tournament_form.participants }}</td>
+            </tr>
+        </table>
+            <span id="tournament_id">{{ tournament_id }}</span>
+        {% if tournament_is_over %}
+            <input type="submit" value="Save tournament info" disabled/>
+        {% else %}
+            <input type="submit" value="Save tournament info"/>
+        {% endif %}
+    {% if tournament_id %}
+        {% if not tournament_is_over %}
+            <button id="start_tournament">
+                {% if list_of_gameformsets %}
+                    Add a tour
+                {% else %}
+                    Start tournament
+                {% endif %}
+            </button>
+        {% else %}
+            <button id="start_tournament" disabled>
+                {% if list_of_gameformsets %}
+                    Add a tour
+                {% else %}
+                    Start tournament
+                {% endif %}
+            </button>
+        {% endif %}
+    {% endif %}
+        </form>
+    {% endif %}
+</div>
+<div id="t_points_info">
+<table>
+    {% for participant in participants_by_points %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>
+                {{ participant.0.surname }} {{ participant.0.name }}
+            </td>
+            <td>
+                {{ participant.1 }}
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+
+{% if tournament_id %}
+    {% if list_of_gameformsets and not tournament_is_over %}
+        <button><a href="{% url 'complete_tournament' tournament_id %}">Complete the tournament</a></button>
+    {% else %}
+        <button id="compl_tnmnt" disabled><a style="pointer-events: none; color: grey" href="{% url 'complete_tournament' tournament_id %}">Complete the tournament</a></button>
+    {% endif %}
+{% endif %}
+</div>
+{% if tournament_is_over %}
+    <p>TOURNAMENT COMPLETED.</p>
+{% elif list_of_gameformsets or games %}
+    <p>TOURNAMENT IN PROGRESS.</p>
+{% elif not list_of_gameformsets or not games %}
+    {% if tournament_id %}
+        <p>READY TO START.</p>
+    {% endif %}
+{% endif %}
+</div>
+<div id="tour_table">
+{% if list_of_gameformsets and user.is_authenticated %}
+{% for gameformset in list_of_gameformsets %}
+    <form method="POST" action="/save_tour/" style="float: left" id="tour_{{ forloop.counter }}_form_ajax">
+    {% csrf_token %}
+    {{ gameformset.management_form }}
+
+    <table rules='all' border="1px">
+    <thead>
+    <tr>
+        <td>
+            <b>Tour {{ forloop.counter }}</b>
+            {% if not forloop.last or tournament_is_over %}
+                <input type="submit" value="Save tour" name="save_tour_ajax" disabled='1' style="float: right">
+            {% else %}
+                <input type="submit" value="Save tour" name="save_tour_ajax" style="float: right">
+            {% endif %}
+        </td>
+        <td><b>Winner</b></td>
+    </tr>
+    </thead>
+    <tbody>
+        {% for game in gameformset %}
+            <tr>
+                <td style="display: none">
+                    <input type="hidden" value="{{ game.number_of_tour.value }}" name="num_of_tour"/>
+                    <input type="hidden" value="{{ game.tournament.value }}" name="num_of_tournament"/>
+                </td>
+                <td style="display: none">
+                    {{ game.id }}
+                    {{ game.tournament }}
+                    {{ game.number_of_tour }}
+                    {{ game.number_of_game_in_tour }}
+                    {{ game.elo_gained_white }}
+                    {{ game.elo_gained_black }}
+                    {{ game.tournament_points_white }}
+                    {{ game.tournament_points_black }}
+                </td>
+                <td>
+                    {% if game.opponent_white.value == game.opponent_white.empty_label %}
+
+                    {% else %}
+                       <span style="background: url('{% static "img/white.jpg" %}') no-repeat; float: left; width: 29px; height: 29px"></span>{{ game.opponent_white }}
+                            <br/>
+                            <span style="font-size: 60%;"> Elo points gained: {{ game.elo_gained_white.value }}</span>
+                    {% endif %}
+                </td>
+
+            {% if game.opponent_black.value == game.opponent_black.empty_label or game.opponent_white.value == game.opponent_white.empty_label %}
+                <td rowspan="2"></td>
+            {% else %}
+                <td rowspan="2">{{ game.winner }}</td>
+            {% endif %}
+
+            </tr>
+            <tr>
+                <td>
+                {% if game.opponent_black.value == game.opponent_black.empty_label %}
+                    NO OPPONENT
+                {% else %}
+                    <span style="background: url('{% static "img/black.jpg" %}') no-repeat; float: left; width: 29px; height: 29px"></span>{{ game.opponent_black }}
+                            <br/>
+                            <span style="font-size: 60%;">Elo points gained: {{ game.elo_gained_black.value }}</span>
+                {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+    {% if not forloop.last or tournament_is_over  %}
+        <input type="submit" value="Save tour" name="save_tour_ajax" disabled='1'>
+    {% else %}
+        <input type="submit" value="Save tour" name="save_tour_ajax">
+    {% endif %}
+    </form>
+{% endfor %}
+{% elif not user.is_authenticated and not games %}
+    THERE ARE NO TOURS
+{% else %}
+{% for tour_number in tour_numbers %}
+    <table rules='all' border="1px" style="float: left">
+    <thead>
+    <tr>
+        <td>Tour {{ tour_number }}</td>
+        <td>Winner</td>
+    </tr>
+    </thead>
+    <tbody>
+    {% for game in games %}
+        {% if game.number_of_tour == tour_number %}
+            <tr>
+            <td><span style="background: url('{% static "img/white.jpg" %}') no-repeat; float: left; width: 29px; height: 29px"></span><span>{{ game.opponent_white }}</span>
+                <br/>
+                <span style="font-size: 60%;">
+                    Elo points gained: {{ game.elo_gained_white }}
+                </span>
+            </td>
+                {% if not game.winner %}
+                    <td rowspan="2">Not played</td>
+                {% else %}
+                    <td rowspan="2">{{ game.winner }}</td>
+                {% endif %}
+            </tr>
+            <tr>
+               <td>
+               {% if not game.opponent_black %}
+                   NO OPPONENT
+               {% else %}
+                   <span style="background: url('{% static "img/black.jpg" %}') no-repeat; float: left; width: 29px; height: 29px"></span><span>{{ game.opponent_black }}</span>
+               <br/>
+                   <span style="font-size: 60%;">
+                       Elo points gained: {{ game.elo_gained_black }}
+                   </span>
+               {% endif %}
+               </td>
+            </tr>
+        {% endif %}
+    {% endfor %}
+    </tbody>
+    </table>
+{% endfor %}
+{% endif %}
+</div>
+<script>
+location_to_return = window.location.href;
+
+$(function(){
+    $('#start_date_datepicker').datepicker({ dateFormat: "yy-mm-dd" });
+    $('#end_date_datepicker').datepicker({ dateFormat: "yy-mm-dd" });
+});
+
+
+$("#start_tournament").click(function(){
+    data_to_send = '&csrfmiddlewaretoken=' + $('input[name=csrfmiddlewaretoken]').val() +
+                   '&tournament_id=' + $('#tournament_id').text();
+
+    $.ajax({
+        type: "POST",
+        url: "{% url 'start_continue_tournament' %}",
+        data: data_to_send,
+        success: function(data){
+            window.location.replace(location_to_return);
+        },
+        error: function(data_from_server){
+            received_data = $.parseJSON(data_from_server['responseText'])
+            alert(received_data['error_text']);
+        }
+    });
+    return false;
+});
+
+$(document).ready(function(){
+    submit_options = {
+        success: function(data_from_server){
+            //alert(data_from_server['result'].toString());
+            tournament_id = data_from_server['tournament_id']
+            window.location.replace('/tournament/'+tournament_id.toString());
+        },
+        error: function(data_from_server){
+            error = $.parseJSON(data_from_server['responseText'])
+            alert(error['result']+'\n'+error['error_text'])
+        },
+        dataType: 'json'
+    };
+
+    $("form[id^=tour_][id$=form_ajax]").ajaxForm(submit_options);
+    $('form#tournament_form').ajaxForm(submit_options);
+
+    all_players_in_games=$('select[id^="id_tour"]').not('[id$="winner"]').not('[id$="tournament"]').focus(function(){
+        previous_value = this.value;
+        console.log("FOCUSED!! to "+$(this).attr("name"));
+    }).change(function(){
+        new_value = this.value;
+        if (new_value == previous_value) {
+            console.log("UNFOCUSED!! Nothing changed in "+$(this).attr("name"));
+        } else {
+            current_form = $("form[id^=" + $(this).attr("name").substring(0, 6) + "]");
+            current_players=current_form.
+                    find("select[name^=" + $(this)
+
+
+
+
+                            .attr("name").substring(0, 6) + "]").
+                        not("[name$=winner]").
+                            not("[name$=tournament]").
+                                not(this).
+                                    each(function(){
+                                        if (this.value == new_value){
+                                            this.value = previous_value;
+                                        }
+                                    });
+
+            console.log("UNFOCUSED!! Value changed to " + new_value+ " in " + $(this).attr("name"));
+        }
+    });
+});
+</script>
+{% endblock %}
