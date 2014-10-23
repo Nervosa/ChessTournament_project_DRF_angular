@@ -12,8 +12,6 @@
         var updateUser = function ($data, participant_id, participant_name) {
             if ($data != participant_name) {
                 return $http.put('/api/participants/' + participant_id, {name: $data});
-            } else {
-                alert('Nothing changed!!');
             }
         };
 
