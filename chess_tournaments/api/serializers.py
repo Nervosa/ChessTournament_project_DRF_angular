@@ -3,6 +3,11 @@ from rest_framework import serializers
 
 
 class ParticipantSerializer(serializers.HyperlinkedModelSerializer):
+    def __init__(self, *args, **kwargs):
+        kwargs['partial'] = True
+        super(ParticipantSerializer, self).__init__(*args, **kwargs)
+
+
     class Meta:
         model = Participant
         fields = ['id', 'name', 'surname', 'age', 'elo_rating']

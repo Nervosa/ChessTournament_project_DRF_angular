@@ -1,12 +1,68 @@
+from bsddb import _iter_mixin
+from django.http.response import Http404
+from rest_framework.views import APIView
 from chess_tournaments.api.serializers import ParticipantSerializer, TournamentSerializer, GameSerializer
 from chess_tournaments.models import Participant, Tournament, Game
-from rest_framework import viewsets
+from rest_framework import viewsets, mixins
 from rest_framework import generics
+from rest_framework import mixins
 from rest_framework import status
 from rest_framework.response import Response
 from chess_tournaments.models import Participant
 from rest_framework.decorators import api_view
 
+
+class ParticipantList(generics.ListCreateAPIView):
+    queryset = Participant.objects.all()
+    serializer_class = ParticipantSerializer
+
+
+class ParticipantDetail(generics.RetrieveUpdateDestroyAPIView):
+
+    queryset = Participant.objects.all()
+    serializer_class = ParticipantSerializer
+
+'''
+class ParticipantList(APIView):
+
+    def get(self, request, format=None):
+        participants = Participant.objects.all()
+        participants_serializer = ParticipantSerializer(participants, many=True)
+        return Response(participants_serializer.data)
+
+    def post(self, request, format=None):
+        participants_serializer = ParticipantSerializer(data=request.DATA)
+        if participants_serializer.is_valid():
+            participants_serializer.save()
+            return Response(participants_serializer.DATA, status=status.HTTP_201_CREATED)
+        return Response(participants_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ParticipantDetail(APIView):
+
+    def get_object(self, pk):
+        try:
+            return Participant.objects.get(pk=pk)
+        except Participant.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        participant = self.get_object(pk)
+        participant_serializer = ParticipantSerializer(participant)
+        return Response(participant_serializer.DATA)
+
+    def put(self, request, pk, format=None):
+        participant = self.get_object(pk)
+        participant_serializer = ParticipantSerializer(participant, request.DATA, partial=True)
+        if participant_serializer.is_valid():
+            participant_serializer.save()
+            return Response(participant_serializer.data)
+        return Response(participant_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+        participant = Participant.objects.get(pk)
+        participant.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 @api_view(['GET', 'POST'])
 def participants_list(request, format=None):
@@ -42,7 +98,7 @@ def participant_detail(request, pk, format=None):
     elif request.method == 'DELETE':
         participant.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-'''
+
 class ParticipantViewSet(viewsets.ModelViewSet):
     queryset = Participant.objects.all()
     serializer_class = ParticipantSerializer

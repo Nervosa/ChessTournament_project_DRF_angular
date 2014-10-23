@@ -33,7 +33,7 @@
         function($scope, participantsService){
             $scope.updateUser = participantsService.updateUser;
             participantsService.all_participants().success(function(data){
-                $scope.all_participants = data;
+                $scope.all_participants = data.results;
             });
         });
 })();
