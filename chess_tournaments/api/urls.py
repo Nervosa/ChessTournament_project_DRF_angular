@@ -1,10 +1,11 @@
 from django.conf.urls import patterns, url, include
 from rest_framework import routers
 from rest_framework.urlpatterns import format_suffix_patterns
+from chess_tournaments.api import views
 
-urlpatterns = patterns('chess_tournaments.api.views',
-    url(r'^api/participants/$', 'participants_list'),
-    url(r'^api/participants/(?P<pk>[0-9]+)$', 'participant_detail'),
+urlpatterns = patterns('chess_tournaments.api',
+    url(r'^api/participants/$', views.ParticipantList.as_view()),
+    url(r'^api/participants/(?P<pk>[0-9]+)/$', views.ParticipantDetail.as_view()),
 )
 
 urlpatterns = format_suffix_patterns(urlpatterns)
