@@ -17,7 +17,7 @@
 {% endblock %}
 
 {% block body %}
-    <b>PARTICIPANTS</b>
+    <!--<b>PARTICIPANTS</b>
     <p><i>Clicking column names will sort ascending/descending the contents of table according to pressed column name.</i></p>
     {% if user.is_authenticated %}
         <p><i><b>As you're a judge you can edit participants' info just clicking proper cell in a table.</b></i></p>
@@ -64,8 +64,8 @@
             </tbody>
         </table>
     {% endif %}
-    <hr>
-    <h1>Participants got by API</h1>
+    <hr>-->
+    <h1>Participants</h1>
     <div ng-controller="ParticipantsController as participants">
 
         <table id="participants_table_api" rules="all" border="1px" ts-wrapper>

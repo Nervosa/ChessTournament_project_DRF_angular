@@ -163,6 +163,11 @@ DEFAULT_INPLACE_EDIT_OPTIONS_ONE_BY_ONE = True # modify the behavior of the DEFA
 INPLACE_GET_FIELD_URL = None # to change the url where django-inplaceedit use to get a field
 INPLACE_SAVE_URL = None # to change the url where django-inplaceedit use to save a field
 
+REST_FRAMEWORK = {
+    'PAGINATE_BY': 20,
+    'MAX_PAGINATE_BY': 100
+}
+
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 
 # A sample logging configuration. The only tangible logging
