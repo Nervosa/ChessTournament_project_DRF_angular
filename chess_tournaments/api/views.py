@@ -6,6 +6,7 @@ from rest_framework import permissions, generics, views
 from rest_framework.response import Response
 from chess_tournaments.models import Participant
 from django.contrib.auth.models import User
+from django.contrib.auth import login, logout
 from rest_framework import viewsets
 from rest_framework.permissions import AllowAny
 from .authentication import ChessTournamentBasicAuthentication
@@ -13,10 +14,14 @@ from .authentication import ChessTournamentBasicAuthentication
 
 class AuthView(views.APIView):
     authentication_classes = (ChessTournamentBasicAuthentication,)
-    serializer_class = UserSerializer
 
     def post(self, request, *args, **kwargs):
-        return Response(self.serializer_class(request.user).data)
+        login(request, request.user)
+        return Response(UserSerializer(request.user).data)
+
+    def delete(self, request, *args, **kwargs):
+        logout(request)
+        return Response({})
 
 
 class UserView(viewsets.ModelViewSet):
