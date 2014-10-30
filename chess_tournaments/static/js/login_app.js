@@ -40,7 +40,7 @@ login_app = angular.module('LoginApp', ['ui.bootstrap', 'ngResource']).config(['
     };
 });
 
-login_app.controller('ModalDemoCtrl', function ($scope, $modal, $log) {
+login_app.controller('ModalDemoCtrl', ['authController', function ($scope, $modal, $log) {
 
       $scope.open = function (size) {
 
@@ -54,7 +54,7 @@ login_app.controller('ModalDemoCtrl', function ($scope, $modal, $log) {
           $log.info('Modal dismissed at: ' + new Date());
         });
       };
-    });
+    }]);
 
 login_app.controller('ModalInstanceCtrl', function ($scope, $modalInstance) {
 
