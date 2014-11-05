@@ -1,7 +1,7 @@
 (function(){
     'use strict';
 
-    var chess_app = angular.module('chess_app', ['tableSort', 'xeditable', 'ngCookies', 'LoginApp'], function ($interpolateProvider){
+    var chess_app = angular.module('chess_app', ['tableSort', 'xeditable', 'ngCookies', 'LoginApp', 'angularModalService'], function ($interpolateProvider){
         $interpolateProvider.startSymbol("{[{");
         $interpolateProvider.endSymbol("}]}");
     });
@@ -17,6 +17,26 @@
             }
         };
 
+
+    chess_app.controller('ModalWindow6', function($scope, ModalService){
+        $scope.showAnotherModal = function(){
+            ModalService.showModal({
+                templateUrl: 'anotherModal.html',
+                controller: "ModalController"
+            }).then(function(modal){
+                modal.element.modal();
+                modal.close.then(function(result){
+                    console.log("Result of another modal: " + result);
+                });
+            });
+        };
+    });
+
+    chess_app.controller('ModalController', function($scope, close){
+        $scope.close = function(result){
+            close(result, 500);
+        };
+    });
 
         var all_participants = function(){
             return $http({
