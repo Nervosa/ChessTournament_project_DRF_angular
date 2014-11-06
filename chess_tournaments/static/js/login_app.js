@@ -33,7 +33,7 @@ login_app = angular.module('LoginApp', ['ui.bootstrap', 'ngResource']).config(['
             alert(data.data.detail);    //when got incorrect username and password
         });
     };
-    $scope.logout = function(){
+    $scope.log_out = function(){
         api.auth.logout(function(){
             $scope.user = undefined;
         });

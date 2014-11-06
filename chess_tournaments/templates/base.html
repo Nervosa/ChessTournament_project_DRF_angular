@@ -14,14 +14,11 @@
 </title>
 </head>
 <body ng-app="chess_app" ng-cloak ng-init="user='{{user.username}}'">
-<div id="another_login" ng-controller="ModalWindow6">
-    <a class="btn btn-default" href ng-click="showAnotherModal()">Show a modal</a>
-</div>
 <div id="header" ng-controller="ModalDemoCtrl">
 
         {% block login_link %}
             <!--{% if user.is_authenticated %}-->
-                <a ng-show="user" ng-click="logout()" style="cursor: pointer">Logout</a> <!--href="{% url 'logout' %}-->
+                <a ng-show="user" ng-click="log_out()" style="cursor: pointer">Logout</a> <!--href="{% url 'logout' %}-->
             <!--{% else %}-->
                 <a ng-hide="user" style="cursor: pointer" ng-click="open('sm')">Login</a> <!-- href="#modal-login" rel="modal:open"-->
             <!--{% endif %}-->
@@ -50,23 +47,6 @@
             </form>
             <button class="btn btn-default" ng-click="login()">Login</button>
             <button class="btn btn-default" ng-click="cancel()">Cancel</button>
-        </div>
-    </script>
-
-    <script type="text/ng-template" id="anotherModal.html">
-        <div class="modal fade">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        pow pow
-                        <button type="button" class="close" ng-click="close('Cancel')" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title"></h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>JK</p>
-                    </div>
-                </div>
-            </div>
         </div>
     </script>
 
