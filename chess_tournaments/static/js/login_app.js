@@ -24,18 +24,15 @@ login_app = angular.module('LoginApp', ['ui.bootstrap', 'ngResource']).config(['
 
     $scope.login = function(){
         $('#id_auth_form input').checkAndTriggerAutoFillEvent();
+        $scope.locationToReturn = window.location.href;
         api.auth.login($scope.getCredentials()).$promise.
         then(function(data){
             $scope.user = data.username; //when got valid username and password
             $scope.ok();
+            window.location.replace($scope.locationToReturn);
         }).
         catch(function(data){
             alert(data.data.detail);    //when got incorrect username and password
-        });
-    };
-    $scope.log_out = function(){
-        api.auth.logout(function(){
-            $scope.user = undefined;
         });
     };
 });
@@ -56,9 +53,11 @@ login_app.controller('ModalDemoCtrl', function ($scope, $modal, $log, api) {
       };
 
     $scope.log_out = function(){
+        $scope.locationToReturn = window.location.href;
         api.auth.logout(function(){
             $scope.user = undefined;
-        });
+        })
+        window.location.replace($scope.locationToReturn);
     };
     });
 

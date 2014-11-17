@@ -18,9 +18,9 @@
 
         {% block login_link %}
             <!--{% if user.is_authenticated %}-->
-                <a ng-show="user" ng-click="log_out()" style="cursor: pointer">Logout</a> <!--href="{% url 'logout' %}-->
+                <a ng-click="log_out()" style="cursor: pointer">Logout</a> <!--href="{% url 'logout' %}-->
             <!--{% else %}-->
-                <a ng-hide="user" style="cursor: pointer" ng-click="open('sm')">Login</a> <!-- href="#modal-login" rel="modal:open"-->
+                <a style="cursor: pointer" ng-click="open('sm')">Login</a> <!-- href="#modal-login" rel="modal:open"-->
             <!--{% endif %}-->
         {% endblock %}
         <a href="{% url 'tournaments' %}">Tournaments</a>
