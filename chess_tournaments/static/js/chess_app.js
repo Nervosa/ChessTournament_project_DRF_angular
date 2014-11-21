@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('chess_app', ['tableSort', 'xeditable', 'ngCookies', 'LoginApp'], function ($interpolateProvider){
+        .module('chess_app', ['tableSort', 'xeditable', 'ngCookies', 'LoginApp', 'ngRoute'], function ($interpolateProvider){
         $interpolateProvider.startSymbol("{[{");
         $interpolateProvider.endSymbol("}]}");
     })
@@ -10,6 +10,19 @@
         .run(function($http, $cookies){
         $http.defaults.headers.common['X-CSRFToken'] = $cookies['csrftoken'];
     })
+        .config(function($routeProvider, $locationProvider){
+            $routeProvider
+                .when('/', {
+                    //template: "<h1>MAIN ANG OLOLO {[{name}]}</h1>",
+                    templateUrl: 'main_ang.html',
+                    controller: 'showSomethingCtrl'
+                })
+                .otherwise({
+                    redirectTo: '/'
+                });
+
+            $locationProvider.html5Mode(true);
+        })
         .service('participantsService', function ($http) {
         var updateUser = function ($data, participant_id, participant_name) {
             if ($data != participant_name) {
@@ -35,6 +48,16 @@
                 $scope.all_participants = data.results;
             });
         }]
-    );
+    )
+        .controller('mainPageCtrl', ['$scope', function($scope, $route, $routeParams, $location){
+            $scope.$route = $route;
+            $scope.$location = $location;
+            $scope.$routeParams = $routeParams;
+
+        }])
+        .controller('showSomethingCtrl', ['$scope', function($scope){
+            $scope.name = "Nervosa";
+        }])
+    ;
 
 })();

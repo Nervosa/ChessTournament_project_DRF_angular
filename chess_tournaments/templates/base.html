@@ -13,7 +13,7 @@
     {% endblock %}
 </title>
 </head>
-<body ng-app="chess_app" ng-cloak ng-init="user='{{user.username}}'">
+<body ng-app="chess_app" ng-cloak ng-init="user='{{user.username}}'" ng-controller="mainPageCtrl">
 <div id="header" ng-controller="ModalDemoCtrl">
 
         {% block login_link %}
@@ -30,7 +30,10 @@
 
 {% block body %}
 {% endblock %}
+<h1>Here goes a view:</h1>
+<div ng-view>
 
+</div>
 
     <script type="text/ng-template" id="myModalContent.html">
         <div class="modal-header">
@@ -78,6 +81,10 @@
 <script src="{% static 'bower_components/angular-resource/angular-resource.js' %}"></script>
 <script src="{% static 'bower_components/angular-modal-service/dst/angular-modal-service.js' %}"></script>
 <script src="{% static 'bower_components/autofill-event/src/autofill-event.js' %}"></script>
+<script src="{% static 'bower_components/angular-route/angular-route.js' %}"></script>
 <script src="{% static 'js/chess_app.js' %}" type="text/javascript" charset="utf-8"></script>
 <script src="{% static 'js/login_app.js' %}" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+    angular.element(document.getElementsByTagName('head')).append(angular.element('<base href="' + window.location.pathname + '" />'));
+</script>
 </html>
