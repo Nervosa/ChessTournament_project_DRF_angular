@@ -1,5 +1,6 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
+from chess_tournaments.views import MainAngView
 
 
 admin.autodiscover()
@@ -23,5 +24,6 @@ urlpatterns = patterns('',
                        url(r'^get_tours/', 'chess_tournaments.views.get_games_and_tours', name='get_tours'),
                        url(r'^save_tour/', 'chess_tournaments.views.save_tour', name='save_tour'),
                        url(r'^complete_tournament/(?P<tournament_id>\d+)/$', 'chess_tournaments.views.complete_tournament', name='complete_tournament'),
+                       url(r'^(?P<template_name>\w+).html/$', MainAngView.as_view()),
                        url(r'^', include('chess_tournaments.api.urls'))
                        )

@@ -56,7 +56,7 @@
 
         }])
         .controller('showSomethingCtrl', ['$scope', function($scope){
-            $scope.name = "Nervosa";
+            $scope.name = ($scope.user) ? ($scope.user) : ('Anonymous');
         }])
     ;
 

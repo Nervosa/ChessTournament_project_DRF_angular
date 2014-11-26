@@ -1,4 +1,5 @@
 import json
+import os
 from c_utils import calculate_elo_earned, get_games_and_tours, get_participants_tournament_points
 from django.contrib.auth import authenticate, login, logout
 from django.core.exceptions import ValidationError
@@ -6,10 +7,23 @@ from django.forms.models import modelformset_factory
 from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template.context import RequestContext
+from django.views.generic.base import TemplateResponseMixin, TemplateView
 from chess_tournaments.c_forms import TournamentForm, ParticipantForm
 from chess_tournaments.models import Tournament, Game, Participant
 from django.db.models import Q
 from django import forms
+
+
+class MainAngView(TemplateView):
+
+    def get_template_names(self, **kwargs):
+        self.template_name = self.kwargs.get('template_name')+'.html'
+        return super(TemplateView, self).get_template_names(**kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(MainAngView, self).get_context_data(**kwargs)
+        # context['template_name'] = kwargs['template_name']
+        return context
 
 
 def Main(request):
