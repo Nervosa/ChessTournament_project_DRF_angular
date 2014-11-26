@@ -56,8 +56,12 @@ angular
         $scope.locationToReturn = window.location.href;
         api.auth.logout(function(){
             $scope.user = undefined;
-        })
-        window.location.replace($scope.locationToReturn);
+        }).$promise.then(
+            function(data){
+                window.location.replace($scope.locationToReturn);
+            }
+        )
+
     };
     })
     .controller('ModalInstanceCtrl', function ($scope, $modalInstance) {
