@@ -14,8 +14,11 @@
             $routeProvider
                 .when('/', {
                     //template: "<h1>MAIN ANG OLOLO {[{name}]}</h1>",
-                    templateUrl: 'main_ang.html',
+                    templateUrl: 'http://127.0.0.1:8000/main_ang.html',
                     controller: 'showSomethingCtrl'
+                })
+                .when('/tournaments', {
+                    controller: 'showTournamentsCtrl'
                 })
                 .otherwise({
                     redirectTo: '/'
@@ -57,6 +60,9 @@
         }])
         .controller('showSomethingCtrl', ['$scope', function($scope){
             $scope.name = ($scope.user) ? ($scope.user) : ('Anonymous');
+        }])
+        .controller('showTournamentsCtrl', ['$scope', '$http', function($scope, $http){
+            $http.get('/tournaments/');
         }])
     ;
 
