@@ -1,5 +1,5 @@
 angular
-    .module('LoginApp', ['ui.bootstrap', 'ngResource']).config(['$httpProvider', function($httpProvider){
+    .module('LoginApp', ['ui.bootstrap', 'ngResource', 'ui.router']).config(['$httpProvider', function($httpProvider){
     $httpProvider.defaults.xsrfCookieName = 'csrftoken';
     $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
 }]).factory('api', function($resource){
@@ -17,19 +17,18 @@ angular
         })
     };
 })
-    .controller('authController', function($scope, api){
+    .controller('authController', function($scope, api, $window){
         $scope.getCredentials = function(){
             return {username: $scope.username, password: $scope.password};
         };
 
         $scope.login = function(){
             $('#id_auth_form input').checkAndTriggerAutoFillEvent();
-            $scope.locationToReturn = window.location.href;
             api.auth.login($scope.getCredentials()).$promise.
             then(function(data){
                 $scope.user = data.username; //when got valid username and password
                 $scope.ok();
-                window.location.replace($scope.locationToReturn);
+                window.location.replace(window.location.href);
             }).
             catch(function(data){
                 try {
@@ -53,12 +52,11 @@ angular
         });
       };
     $scope.log_out = function(){
-        $scope.locationToReturn = window.location.href;
         api.auth.logout(function(){
             $scope.user = undefined;
         }).$promise.then(
             function(data){
-                window.location.replace($scope.locationToReturn);
+                window.location.reload();
             }
         )
 

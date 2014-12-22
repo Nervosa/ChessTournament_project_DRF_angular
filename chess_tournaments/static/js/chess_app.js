@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('chess_app', ['tableSort', 'xeditable', 'ngCookies', 'LoginApp', 'ngRoute'], function ($interpolateProvider){
+        .module('chess_app', ['tableSort', 'xeditable', 'ngCookies', 'LoginApp', 'ui.router'], function ($interpolateProvider){
         $interpolateProvider.startSymbol("{[{");
         $interpolateProvider.endSymbol("}]}");
     })
@@ -10,21 +10,22 @@
         .run(function($http, $cookies){
         $http.defaults.headers.common['X-CSRFToken'] = $cookies['csrftoken'];
     })
-        .config(function($routeProvider, $locationProvider){
-            $routeProvider
-                .when('/', {
-                    //template: "<h1>MAIN ANG OLOLO {[{name}]}</h1>",
-                    templateUrl: 'http://127.0.0.1:8000/main_ang.html',
+        .config(function($stateProvider, $urlRouterProvider){
+            $urlRouterProvider.otherwise("/");
+
+            $stateProvider
+                .state({
+                    name: 'land',
+                    url: "/",
+                    templateUrl: "main_ang.html",
                     controller: 'showSomethingCtrl'
                 })
-                .when('/tournaments', {
-                    controller: 'showTournamentsCtrl'
+                .state({
+                    name: 'tournaments',
+                    url: "tournaments/",
+                    templateUrl: 'tournaments_list_ang.html',
+                    controller: 'showSomethingCtrl'
                 })
-                .otherwise({
-                    redirectTo: '/'
-                });
-
-            $locationProvider.html5Mode(true);
         })
         .service('participantsService', function ($http) {
         var updateUser = function ($data, participant_id, participant_name) {
@@ -52,14 +53,9 @@
             });
         }]
     )
-        .controller('mainPageCtrl', ['$scope', function($scope, $route, $routeParams, $location){
-            $scope.$route = $route;
-            $scope.$location = $location;
-            $scope.$routeParams = $routeParams;
-
-        }])
         .controller('showSomethingCtrl', ['$scope', function($scope){
-            $scope.name = ($scope.user) ? ($scope.user) : ('Anonymous');
+            $scope.visitor = {name: ''};
+            $scope.visitor.name = ($scope.user) ? ($scope.user) : "Anonymous";
         }])
         .controller('showTournamentsCtrl', ['$scope', '$http', function($scope, $http){
             $http.get('/tournaments/');
