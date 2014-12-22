@@ -4,7 +4,7 @@ from chess_tournaments.api.serializers import ParticipantSerializer, TournamentS
 from .permissions import IsStaffOrTargetUser
 from rest_framework import permissions, generics, views
 from rest_framework.response import Response
-from chess_tournaments.models import Participant
+from chess_tournaments.models import Participant, Tournament
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout
 from rest_framework import viewsets
@@ -44,4 +44,18 @@ class ParticipantDetail(generics.RetrieveUpdateDestroyAPIView):
 
     queryset = Participant.objects.all()
     serializer_class = ParticipantSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+
+class TournamentList(generics.ListCreateAPIView):
+
+    queryset = Tournament.objects.all()
+    serializer_class = TournamentSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+
+class TournamentDetail(generics.RetrieveUpdateDestroyAPIView):
+
+    queryset = Tournament.objects.all()
+    serializer_class = TournamentSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)

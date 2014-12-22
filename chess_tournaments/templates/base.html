@@ -12,15 +12,17 @@
     {% block title %}
     {% endblock %}
 </title>
+<meta charset="utf-8">
+<base href="/">
 </head>
 <body ng-app="chess_app" ng-cloak ng-init="user='{{user.username}}'">
 <div id="header" ng-controller="ModalDemoCtrl">
 
         {% block login_link %}
             <!--{% if user.is_authenticated %}-->
-                <a ng-click="log_out()" style="cursor: pointer">Logout</a>
+                <a ng-click="log_out()">Logout</a> <!-- style="cursor: pointer; text-decoration: none" -->
             <!--{% else %}-->
-                <a style="cursor: pointer" ng-click="open('sm')">Login</a>
+                <a  ng-click="open('sm')">Login</a> <!-- style="cursor: pointer; text-decoration: none" -->
             <!--{% endif %}-->
         {% endblock %}
         <a ui-sref="tournaments">Tournaments</a>

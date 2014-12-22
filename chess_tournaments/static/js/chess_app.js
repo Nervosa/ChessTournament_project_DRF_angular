@@ -10,7 +10,7 @@
         .run(function($http, $cookies){
         $http.defaults.headers.common['X-CSRFToken'] = $cookies['csrftoken'];
     })
-        .config(function($stateProvider, $urlRouterProvider){
+        .config(function($stateProvider, $urlRouterProvider, $locationProvider){
             $urlRouterProvider.otherwise("/");
 
             $stateProvider
@@ -24,8 +24,9 @@
                     name: 'tournaments',
                     url: "tournaments/",
                     templateUrl: 'tournaments_list_ang.html',
-                    controller: 'showSomethingCtrl'
-                })
+                    controller: 'showTournamentsCtrl'
+                });
+            $locationProvider.html5Mode(true);
         })
         .service('participantsService', function ($http) {
         var updateUser = function ($data, participant_id, participant_name) {
@@ -46,6 +47,20 @@
             all_participants: all_participants
         };
     })
+        .service('tournamentsService', function($http){
+            var all_tournaments = function(){
+                return $http({
+                    url: '/api/tournaments',
+                    method: 'GET'
+                })
+            };
+
+            return {
+                all_tournaments: all_tournaments
+            }
+        }
+
+    )
         .controller('ParticipantsController', ['$scope', 'participantsService', function($scope, participantsService){
             $scope.updateUser = participantsService.updateUser;
             participantsService.all_participants().success(function(data){
@@ -57,8 +72,10 @@
             $scope.visitor = {name: ''};
             $scope.visitor.name = ($scope.user) ? ($scope.user) : "Anonymous";
         }])
-        .controller('showTournamentsCtrl', ['$scope', '$http', function($scope, $http){
-            $http.get('/tournaments/');
+        .controller('showTournamentsCtrl', ['$scope', 'tournamentsService', function($scope, tournamentsService){
+            tournamentsService.all_tournaments().success(function(data){
+                console.log(data.results);
+            })
         }])
     ;
 

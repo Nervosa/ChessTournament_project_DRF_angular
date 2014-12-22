@@ -26,11 +26,11 @@ class ParticipantSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class TournamentSerializer(serializers.HyperlinkedModelSerializer):
-    game_set = serializers.HyperlinkedRelatedField(queryset=Tournament.objects.all(), many=True, view_name='game-detail')
+    # game_set = serializers.HyperlinkedRelatedField(queryset=Game.objects.all(), many=True, view_name='game-detail')
 
     class Meta:
         model = Tournament
-        fields = ['title', 'start_date', 'end_date', 'participants', 'game_set']
+        fields = ['title', 'start_date', 'end_date']
 
 
 class GameSerializer(serializers.HyperlinkedModelSerializer):

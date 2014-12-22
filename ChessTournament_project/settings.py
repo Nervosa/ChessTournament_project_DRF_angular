@@ -145,10 +145,10 @@ INSTALLED_APPS = (
     'rest_framework',
 )
 
-REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
-    'PAGINATE_BY': 10
-}
+#REST_FRAMEWORK = {
+#    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
+#    'PAGINATE_BY': 10
+#}
 
 INPLACEEDIT_EDIT_EMPTY_VALUE = 'Double click to edit'
 INPLACEEDIT_AUTO_SAVE = True
@@ -162,11 +162,6 @@ DEFAULT_INPLACE_EDIT_OPTIONS = {} # dictionnary of the optionals parameters that
 DEFAULT_INPLACE_EDIT_OPTIONS_ONE_BY_ONE = True # modify the behavior of the DEFAULT_INPLACE_EDIT_OPTIONS usage, if True then it use the default values not specified in your template, if False it uses these options only when the dictionnary is empty (when you do put any options in your template)
 INPLACE_GET_FIELD_URL = None # to change the url where django-inplaceedit use to get a field
 INPLACE_SAVE_URL = None # to change the url where django-inplaceedit use to save a field
-
-REST_FRAMEWORK = {
-    'PAGINATE_BY': 20,
-    'MAX_PAGINATE_BY': 100
-}
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 

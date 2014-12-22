@@ -56,7 +56,7 @@ angular
             $scope.user = undefined;
         }).$promise.then(
             function(data){
-                window.location.reload();
+                window.location.replace(window.location.href);
             }
         )
 

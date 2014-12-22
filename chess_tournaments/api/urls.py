@@ -11,6 +11,8 @@ router.register(r'accounts',views.UserView, 'user-list')
 urlpatterns = patterns('chess_tournaments.api',
     url(r'^api/participants/$', views.ParticipantList.as_view()),
     url(r'^api/participants/(?P<pk>[0-9]+)/$', views.ParticipantDetail.as_view()),
+    url(r'^api/tournaments/$', views.TournamentList.as_view()),
+    url(r'^api/tournaments/(?P<pk>[0-9]+)/$', views.TournamentDetail.as_view()),
     url(r'^api/auth/$', views.AuthView.as_view(), name='authenticate'),
     url(r'^api/', include(router.urls)),
 )
