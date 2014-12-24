@@ -74,7 +74,7 @@
         }])
         .controller('showTournamentsCtrl', ['$scope', 'tournamentsService', function($scope, tournamentsService){
             tournamentsService.all_tournaments().success(function(data){
-                console.log(data.results);
+                console.log(data);
             })
         }])
     ;
