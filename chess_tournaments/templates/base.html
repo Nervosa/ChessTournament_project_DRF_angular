@@ -20,9 +20,9 @@
 
         {% block login_link %}
 
-                <a ng-click="log_out()" ng-show="{[{ user }]}">Logout</a> <!-- style="cursor: pointer; text-decoration: none" -->
+                <a ng-click="log_out()" ng-show="'{[{ user }]}'">Logout</a> <!-- style="cursor: pointer; text-decoration: none" -->
 
-                <a  ng-click="open('sm')" ng-hide="{[{ user }]}">Login</a> <!-- style="cursor: pointer; text-decoration: none" -->
+                <a  ng-click="open('sm')" ng-hide="'{[{ user }]}'">Login</a> <!-- style="cursor: pointer; text-decoration: none" -->
 
         {% endblock %}
         <a ui-sref="tournaments">Tournaments</a>
@@ -56,23 +56,6 @@
             <button class="btn btn-default" ng-click="cancel()">Cancel</button>
         </div>
     </script>
-
-<div id="modal-login" style="display: none">
-    <form id="login_form" method="post" action="{% url 'login' %}">
-        {% csrf_token %}
-        <table>
-            <tr>
-                <td><label for="username">Login:</label></td>
-                <td><input type="text" id="username"></td>
-            </tr>
-            <tr>
-                <td><label for="password">Password:</label></td>
-                <td><input type="password" id="password"></td>
-            </tr>
-        </table>
-        <input id="login_button" type="submit" value="Login">
-    </form>
-</div>
 
 </body>
 <script src="{% static 'bower_components/jquery/dist/jquery.js' %}" type="text/javascript" charset="utf-8"></script>

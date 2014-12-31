@@ -6,7 +6,8 @@ from chess_tournaments.views import MainAngView
 admin.autodiscover()
 
 urlpatterns = patterns('',
-                       url(r'^$', "chess_tournaments.views.Main", name='main'),
+                       url(r'^$', "chess_tournaments.views.Main_1", name='main_1'),
+                       url(r'^\w+/$', "chess_tournaments.views.Main_2", name='main_2'),
                        # url(r'^tournaments/$', 'chess_tournaments.views.TournamentsView', name='tournaments'),
                        # url(r'^tournament/(?P<tournament_id>\d+)/$', 'chess_tournaments.views.TournamentDetailView',
                        #     name='tournament_detail'),
