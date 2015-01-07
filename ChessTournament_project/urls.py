@@ -7,6 +7,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
                        url(r'^$', "chess_tournaments.views.Main", name='main'),
+                       url(r'^\w+/$', "chess_tournaments.views.Main", name='main'),
                        # url(r'^tournaments/$', 'chess_tournaments.views.TournamentsView', name='tournaments'),
                        # url(r'^tournament/(?P<tournament_id>\d+)/$', 'chess_tournaments.views.TournamentDetailView',
                        #     name='tournament_detail'),

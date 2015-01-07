@@ -15,18 +15,18 @@
 <meta charset="utf-8">
 <base href="/">
 </head>
-<body ng-app="chess_app" ng-cloak ng-init="user='{{user.username}}'">
+<body ng-app="chess_app" ng-cloak ng-init="'{{user.username}}' ? user='{{ user.username }}' : user='Anonymous'">
 <div id="header" ng-controller="ModalDemoCtrl">
 
         {% block login_link %}
 
-                <a ng-click="log_out()" ng-show="{[{ user }]}">Logout</a> <!-- style="cursor: pointer; text-decoration: none" -->
+                <a ng-click="log_out()" ng-hide="'{[{ user }]}'=='Anonymous'" href="">Logout</a>
 
-                <a  ng-click="open('sm')" ng-hide="{[{ user }]}">Login</a> <!-- style="cursor: pointer; text-decoration: none" -->
+                <a  ng-click="open('sm')" ng-show="'{[{ user }]}'=='Anonymous'" href="">Login</a>
 
         {% endblock %}
         <a ui-sref="tournaments">Tournaments</a>
-        <a href="{% url 'participants' %}">Participants</a>
+        <a href="#">Participants</a>
         <a ui-sref="land">LAND</a>
 
 </div>
@@ -44,16 +44,16 @@
             <h3 class="modal-title">I'm a modal!</h3>
         </div>
         <div ng-controller="authController">
-            <form id="id_auth_form">
+            <form id="id_auth_form" ng-submit="login()">
                 <div class="form-group">
-                    <input ng-model="username" name="username" type="text" placeholder="Username" class="form-control">
+                    <input autofocus ng-model="username" name="username" type="text" placeholder="Username" class="form-control">
                 </div>
                 <div class="form-group">
                     <input ng-model="password" name="password" type="password" placeholder="Password" class="form-control">
                 </div>
+                <input class="btn btn-default" type="submit" value="Login">
+                <input class="btn btn-default" type="button" value="Cancel" ng-click="cancel()">
             </form>
-            <button class="btn btn-default" ng-click="login()">Login</button>
-            <button class="btn btn-default" ng-click="cancel()">Cancel</button>
         </div>
     </script>
 
@@ -86,6 +86,8 @@
 <script src="{% static 'bower_components/angular-modal-service/dst/angular-modal-service.js' %}"></script>
 <script src="{% static 'bower_components/autofill-event/src/autofill-event.js' %}"></script>
 <script src="{% static 'bower_components/angular-ui-router/release/angular-ui-router.js' %}"></script>
+<script src="{% static 'js/services.js' %}"></script>
+<script src="{% static 'js/controllers.js' %}"></script>
 <script src="{% static 'js/chess_app.js' %}" type="text/javascript" charset="utf-8"></script>
 <script src="{% static 'js/login_app.js' %}" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
