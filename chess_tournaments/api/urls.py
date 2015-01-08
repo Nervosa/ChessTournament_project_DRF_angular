@@ -5,7 +5,7 @@ from chess_tournaments.api import views
 
 
 router = routers.DefaultRouter()
-router.register(r'accounts',views.UserView, 'user-list')
+router.register(r'accounts', views.UserView, 'user-list')
 
 
 urlpatterns = patterns('chess_tournaments.api',
