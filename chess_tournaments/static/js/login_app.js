@@ -50,7 +50,7 @@ angular
           controller: 'ModalInstanceCtrl',
           size: size
         });
-
+        $scope.shouldBeOpen = true;
         modalInstance.result.then(function () {
           $log.info('Modal dismissed at: ' + new Date());
         });
