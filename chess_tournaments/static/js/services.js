@@ -31,11 +31,4 @@ angular.module('chess_app.services', [])
             updateUser: updateUser,
             all_participants: all_participants
         };
-    })
-    .service('commonVarsService', function(){
-        var shouldBeOpen = '';
-
-        return {
-            shouldBeOpen: shouldBeOpen
-        }
     });
