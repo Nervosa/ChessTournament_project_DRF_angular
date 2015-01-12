@@ -26,11 +26,8 @@ class MainAngView(TemplateView):
         return context
 
 
-def Main_1(request):
-    return render_to_response('main.html', RequestContext(request))
+def Main(request):
 
-
-def Main_2(request):
     return render_to_response('main.html', RequestContext(request))
 
 

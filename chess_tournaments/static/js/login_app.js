@@ -43,14 +43,20 @@ angular
 
             });
         };
-}).controller('ModalDemoCtrl', function ($scope, $modal, $log, api) {
+}).controller('ModalDemoCtrl', function ($scope, $modal, $log, api, $timeout) {
+      $scope.init = function(){
+          $timeout(function(){
+              angular.element('input[name="username"]').focus();
+          })
+      };
       $scope.open = function (size) {
         var modalInstance = $modal.open({
           templateUrl: 'myModalContent.html',
           controller: 'ModalInstanceCtrl',
           size: size
         });
-
+        //$scope.shouldBeOpen = true;
+        //commonVarsService.shouldBeOpen = true;
         modalInstance.result.then(function () {
           $log.info('Modal dismissed at: ' + new Date());
         });

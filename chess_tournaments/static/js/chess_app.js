@@ -8,6 +8,7 @@
                               'LoginApp',
                               'ui.router',
                               'chess_app.services',
+                              'chess_app.directives',
                               'chess_app.controllers'],
                               function ($interpolateProvider){
                                 $interpolateProvider.startSymbol("{[{");
@@ -31,7 +32,7 @@
                 })
                 .state({
                     name: 'tournaments',
-                    url: "tournaments/",
+                    url: "/tournaments/",
                     templateUrl: 'tournaments_list_ang.html',
                     controller: 'showTournamentsCtrl'
                 });

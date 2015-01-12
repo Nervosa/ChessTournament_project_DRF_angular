@@ -31,4 +31,4 @@ angular.module('chess_app.services', [])
             updateUser: updateUser,
             all_participants: all_participants
         };
-    })
+    });
