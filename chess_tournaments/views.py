@@ -27,7 +27,6 @@ class MainAngView(TemplateView):
 
 
 def Main(request):
-
     return render_to_response('main.html', RequestContext(request))
 
 

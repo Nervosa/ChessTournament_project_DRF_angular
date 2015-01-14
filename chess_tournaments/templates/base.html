@@ -30,11 +30,11 @@
         <a ui-sref="land">LAND</a>
         <script type="text/ng-template" id="myModalContent.html">
             <div class="modal-header">
-                <h3 class="modal-title">I'm a modal!</h3>
+                <h3 class="modal-title">Enter your credentials</h3>
             </div>
             <div ng-controller="authController">
                 <div class="modal-body">
-                    <form id="id_auth_form" ng-submit="login()">
+                    <form id="id_auth_form" ng-submit="login()" ng-init="init()">
                         <div class="form-group">
                             <input focus-this ng-model="username" name="username" type="text" placeholder="Username" class="form-control">
                         </div>
