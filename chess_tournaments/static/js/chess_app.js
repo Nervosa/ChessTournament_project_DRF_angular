@@ -27,18 +27,21 @@
                 .state({
                     name: 'land',
                     url: "/",
-                    templateUrl: "main_ang.html",
-                    controller: 'showSomethingCtrl'
+                    templateUrl: "/partials/main_ang.html"
+                    //controller: 'showSomethingCtrl'
                 })
                 .state({
                     name: 'tournaments',
                     url: "/tournaments/",
-                    templateUrl: 'tournaments_list_ang.html',
+                    templateUrl: '/partials/tournaments_list_ang.html',
                     controller: 'showTournamentsCtrl'
+                })
+                .state({
+                    name: 'participants',
+                    url: "/participants/",
+                    templateUrl: 'partials/participants_list.html',
+                    controller: 'showParticipantsController'
                 });
             $locationProvider.html5Mode(true);
         })
-        .controller('showSomethingCtrl', ['$scope', function($scope){
-            $scope.just_a_var = 'I\'m a var';
-        }]);
 })();
