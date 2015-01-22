@@ -1,0 +1,26 @@
+{
+  "name": "bower_comp",
+  "version": "1",
+  "homepage": "https://github.com/Nervosa/ChessTournament_project_DRF_angular",
+  "authors": [
+    "nervosa <Nervosa@tut.by>"
+  ],
+  "moduleType": [
+    "globals"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "angular-bootstrap": "~0.11.2",
+    "angular-tablesort": "~1.0.5",
+    "angular-modal-service": "~0.4.0",
+    "angular-route": "~1.3.3",
+    "angular-cookies": "~1.3.1",
+    "angular-xeditable": "~0.1.8",
+    "autofill-event": "~1.0.0",
+    "bootstrap": "~3.3.0",
+    "angular-resource": "~1.3.0",
+    "jquery": "~2.1.1",
+    "angular": "1.2.26",
+    "angular-ui-router": "~0.2.13"
+  }
+}
