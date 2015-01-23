@@ -38,7 +38,7 @@ angular
                 try {
                     alert(data.data.detail);    //when got incorrect username and password
                 } catch(e) {
-                    alert("Check your credentials.");
+                    alert("Check your credentials!");
                 }
 
             });
