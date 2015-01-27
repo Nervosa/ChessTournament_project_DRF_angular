@@ -6,8 +6,7 @@
 <link rel="stylesheet" href="{% static 'css/custom.css' %}">
 <link rel="stylesheet" href="{% static 'bower_components/bootstrap/dist/css/bootstrap.css' %}">
 <link rel="stylesheet" href="{% static 'bower_components/angular/angular-csp.css' %}">
-{% block additional_static %}
-{% endblock %}
+<link rel="stylesheet" href="{% static 'bower_components/angular-xeditable/dist/css/xeditable.css' %}">
 <title>
     {% block title %}
     {% endblock %}
@@ -17,24 +16,17 @@
 </head>
 <body ng-app="chess_app" ng-cloak ng-init="'{{user.username}}' ? user='{{ user.username }}' : user='Anonymous'">
 <div id="header" ng-controller="ModalDemoCtrl">
-
-        {% block login_link %}
-
-                <a ng-click="log_out()" ng-hide="'{[{ user }]}'=='Anonymous'" href="">Logout</a>
-
-                <a ng-click="open('sm')" ng-show="'{[{ user }]}'=='Anonymous'" href="">Login</a>
-
-        {% endblock %}
+        <a ng-click="log_out()" ng-hide="'{[{ user }]}'=='Anonymous'" href="">Logout</a>
+        <a ng-click="open('sm')" ng-show="'{[{ user }]}'=='Anonymous'" href="">Login</a>
         <a ui-sref="tournaments">Tournaments</a>
-        <a href="#">Participants</a>
-        <a ui-sref="land">LAND</a>
+        <a ui-sref="participants">Participants</a>
         <script type="text/ng-template" id="myModalContent.html">
             <div class="modal-header">
                 <h3 class="modal-title">Enter your credentials</h3>
             </div>
             <div ng-controller="authController">
                 <div class="modal-body">
-                    <form id="id_auth_form" ng-submit="login()" ng-init="init()">
+                    <form id="id_auth_form" ng-submit="login()">
                         <div class="form-group">
                             <input focus-this ng-model="username" name="username" type="text" placeholder="Username" class="form-control">
                         </div>
@@ -49,11 +41,7 @@
         </script>
 </div>
 
-{% block body %}
-{% endblock %}
-<h1>Here goes a view:</h1>
-
-<div ui-view="">
+<div ui-view>
 
 </div>
 
