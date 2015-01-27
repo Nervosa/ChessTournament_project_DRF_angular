@@ -14,9 +14,11 @@ angular.module('chess_app.services', [])
 
     )
     .service('participantsService', function ($http) {
-        var updateUser = function ($data, participant_id, participant_name) {
-            if ($data != participant_name) {
-                return $http.put('/api/participants/' + participant_id, {name: $data});
+        var updateUser = function (changed_field, $data, participant_id, participant_data) {
+            data_to_change = {};
+            if ($data != participant_data) {
+                data_to_change[changed_field] = $data;
+                return $http.put('/api/participants/' + participant_id, data_to_change);
             }
         };
 

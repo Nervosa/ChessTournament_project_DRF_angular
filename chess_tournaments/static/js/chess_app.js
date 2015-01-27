@@ -39,8 +39,8 @@
                 .state({
                     name: 'participants',
                     url: "/participants/",
-                    templateUrl: 'partials/participants_list.html',
-                    controller: 'showParticipantsController'
+                    templateUrl: '/partials/participants_list_ang.html',
+                    controller: 'ParticipantsController'
                 });
             $locationProvider.html5Mode(true);
         })
