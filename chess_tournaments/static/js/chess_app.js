@@ -16,8 +16,9 @@
                               })
 
         .run(
-            function($http, $cookies){
+            function($http, $cookies, editableOptions){
                 $http.defaults.headers.common['X-CSRFToken'] = $cookies['csrftoken'];
+                editableOptions.theme = 'bs3';
             })
         .config(function($stateProvider, $urlRouterProvider, $locationProvider){
 
