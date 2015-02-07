@@ -8,8 +8,6 @@
 <link rel="stylesheet" href="{% static 'bower_components/bootstrap/dist/css/bootstrap.css' %}">
 <link rel="stylesheet" href="{% static 'bower_components/angular/angular-csp.css' %}">
 <title>
-    {% block title %}
-    {% endblock %}
 </title>
 <meta charset="utf-8">
 <base href="/">
@@ -27,6 +25,7 @@
             <div ng-controller="authController">
                 <div class="modal-body">
                     <form id="id_auth_form" ng-submit="login()">
+                        {% csrf_token %}
                         <div id="error_message" class="alert alert-danger">
                             test
                         </div>

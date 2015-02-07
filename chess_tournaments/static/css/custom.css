@@ -66,3 +66,21 @@ div#form-container select {
 span#tournament_id {
     visibility: hidden;
 }
+
+a.not_admin {
+    display: none;
+}
+
+a.ng-scope.ng-binding.editable.editable-click.td_not_admin {
+    text-decoration: none !important;
+    border-bottom: none;
+    color: black;
+    cursor: default;
+}
+
+a.ng-scope.ng-binding.editable.editable-click.td_not_admin:hover {
+    text-decoration: none !important;
+    border-bottom: none;
+    color: black;
+    cursor: default;
+}

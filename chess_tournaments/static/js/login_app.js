@@ -36,12 +36,12 @@ angular
             }).
             catch(function(data){
                 error_element = document.querySelector("#error_message");
-                angular.element(error_element).text("ХУЙ ТЕБЕ").show();
+
                 try {
 
-                    //alert(data.data.detail);    //when got incorrect username and password
+                    angular.element(error_element).text(data.data.detail).show();//alert(data.data.detail);    //when got incorrect username and password
                 } catch(e) {
-                    //alert("Check your credentials!");
+                    angular.element(error_element).text("Check your credentials!").show();//alert("Check your credentials!");
                 }
 
             });
