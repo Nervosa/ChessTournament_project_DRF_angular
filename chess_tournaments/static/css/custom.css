@@ -71,6 +71,17 @@ div.not_admin {
     display: none;
 }
 
+td.not_admin {
+    display: none;
+}
+
+td.td_admin {
+
+    border-right: hidden;
+    border-top: hidden;
+    border-bottom: hidden;
+}
+
 a.ng-scope.ng-binding.editable.editable-click.td_not_admin {
     text-decoration: none !important;
     border-bottom: none;

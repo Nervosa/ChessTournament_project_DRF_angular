@@ -13,25 +13,26 @@
                 <tbody>
                 <tr ng-repeat="participant in all_participants" ts-repeat>
                     <td>
-                        <a href="#" ng-class="{ td_not_admin: not_admin }" id="participant_{[{ participant.id }]}_name" editable-text="participant.name" onbeforesave="updateUser('name', $data, participant.id, participant.name)">
+                        <a href="#" ng-class="{ td_not_admin: not_admin }" id="participant_{[{ participant.id }]}_name" editable-text="participant.name" onbeforesave="update_participant('name', $data, participant.id, participant.name)">
                             {[{ participant.name }]}
                         </a>
                     </td>
                     <td>
-                        <a href="#" ng-class="{ td_not_admin: not_admin }" id="participant_{[{ participant.id }]}_surname" editable-text="participant.surname" onbeforesave="updateUser('surname', $data, participant.id, participant.surname)">
+                        <a href="#" ng-class="{ td_not_admin: not_admin }" id="participant_{[{ participant.id }]}_surname" editable-text="participant.surname" onbeforesave="update_participant('surname', $data, participant.id, participant.surname)">
                             {[{ participant.surname }]}
                         </a>
                     </td>
                     <td>
-                        <a href="#" ng-class="{ td_not_admin: not_admin }" id="participant_{[{ participant.id }]}_age" editable-text="participant.age" onbeforesave="updateUser('age', $data, participant.id, participant.age)">
+                        <a href="#" ng-class="{ td_not_admin: not_admin }" id="participant_{[{ participant.id }]}_age" editable-text="participant.age" onbeforesave="update_participant('age', $data, participant.id, participant.age)">
                             {[{ participant.age }]}
                         </a>
                     </td>
                     <td>
-                        <a href="#" ng-class="{ td_not_admin: not_admin }" id="participant_{[{ participant.id }]}_elo_rating" editable-text="participant.elo_rating" onbeforesave="updateUser('elo_rating', $data, participant.id, participant.elo_rating)">
+                        <a href="#" ng-class="{ td_not_admin: not_admin }" id="participant_{[{ participant.id }]}_elo_rating" editable-text="participant.elo_rating" onbeforesave="update_participant('elo_rating', $data, participant.id, participant.elo_rating)">
                             {[{ participant.elo_rating | number:2 }]}
                         </a>
                     </td>
+                    <td ng-class="{ not_admin: not_admin, td_admin: admin }"><a href="" ng-click="delete_participant(participant.id)">Remove</a></td>
                 </tr>
                 </tbody>
             </table>

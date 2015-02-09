@@ -6,6 +6,7 @@ angular.module('chess_app.controllers', [])
             participantsService.all_participants().success(function(data){
                 $scope.all_participants = data;
             });
+
             $scope.addRow = function(){
                 participantsService.add_participant($scope.name, $scope.surname, $scope.age, $scope.elo_rating)
                     .success(function(data){
@@ -22,6 +23,7 @@ angular.module('chess_app.controllers', [])
                         console.log(err);
                     });
             };
+            $scope.delete_participant = participantsService.delete_participant;
         }]
     )
     .controller('showTournamentsCtrl', ['$scope', 'tournamentsService', function($scope, tournamentsService){

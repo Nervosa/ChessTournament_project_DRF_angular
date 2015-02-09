@@ -14,7 +14,7 @@ angular.module('chess_app.services', [])
 
     )
     .service('participantsService', function ($http) {
-        var updateUser = function (changed_field, $data, participant_id, participant_data) {
+        var update_participant = function (changed_field, $data, participant_id, participant_data) {
             data_to_change = {};
             if ($data != participant_data) {
                 data_to_change[changed_field] = $data;
@@ -37,9 +37,14 @@ angular.module('chess_app.services', [])
             })
         };
 
+        var delete_participant = function(id){
+            console.log(id);
+        };
+
         return {
-            updateUser: updateUser,
+            update_participant: update_participant,
             all_participants: all_participants,
-            add_participant: add_participant
+            add_participant: add_participant,
+            delete_participant: delete_participant
         };
     });
