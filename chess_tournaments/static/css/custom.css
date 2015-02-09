@@ -67,7 +67,7 @@ span#tournament_id {
     visibility: hidden;
 }
 
-a.not_admin {
+div.not_admin {
     display: none;
 }
 

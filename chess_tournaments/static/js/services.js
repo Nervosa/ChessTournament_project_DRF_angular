@@ -24,13 +24,22 @@ angular.module('chess_app.services', [])
 
         var all_participants = function(){
             return $http({
-                url: '/api/participants',
+                url: '/api/participants/',
                 method: 'GET'
+            })
+        };
+
+        var add_participant = function(name, surname, age, elo_rating){
+            return $http({
+                url: 'api/participants/',
+                method: 'POST',
+                data: { name: name, surname: surname, age: age, elo_rating: elo_rating }
             })
         };
 
         return {
             updateUser: updateUser,
-            all_participants: all_participants
+            all_participants: all_participants,
+            add_participant: add_participant
         };
     });

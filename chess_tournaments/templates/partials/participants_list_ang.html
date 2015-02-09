@@ -1,41 +1,68 @@
 <h1>Participants</h1>
     <div ng-controller="ParticipantsController as participants">
-
-        <table id="participants_table_api" rules="all" border="1px" ts-wrapper>
-
-            <thead>
-                <tr>
-                    <th ts-criteria="name|lowercase">Name</th>
-                    <th ts-criteria="surname|lowercase" ts-default>Surname</th>
-                    <th ts-criteria="age|parseInt">Age</th>
-                    <th ts-criteria="elo_rating|parseFloat">Elo rating</th>
+        <div style="float: left">
+            <table id="participants_table_api" rules="all" border="1px" ts-wrapper>
+                <thead>
+                    <tr>
+                        <th ts-criteria="name|lowercase">Name</th>
+                        <th ts-criteria="surname|lowercase" ts-default>Surname</th>
+                        <th ts-criteria="age|parseInt">Age</th>
+                        <th ts-criteria="elo_rating|parseFloat">Elo rating</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="participant in all_participants" ts-repeat>
+                    <td>
+                        <a href="#" ng-class="{ td_not_admin: not_admin }" id="participant_{[{ participant.id }]}_name" editable-text="participant.name" onbeforesave="updateUser('name', $data, participant.id, participant.name)">
+                            {[{ participant.name }]}
+                        </a>
+                    </td>
+                    <td>
+                        <a href="#" ng-class="{ td_not_admin: not_admin }" id="participant_{[{ participant.id }]}_surname" editable-text="participant.surname" onbeforesave="updateUser('surname', $data, participant.id, participant.surname)">
+                            {[{ participant.surname }]}
+                        </a>
+                    </td>
+                    <td>
+                        <a href="#" ng-class="{ td_not_admin: not_admin }" id="participant_{[{ participant.id }]}_age" editable-text="participant.age" onbeforesave="updateUser('age', $data, participant.id, participant.age)">
+                            {[{ participant.age }]}
+                        </a>
+                    </td>
+                    <td>
+                        <a href="#" ng-class="{ td_not_admin: not_admin }" id="participant_{[{ participant.id }]}_elo_rating" editable-text="participant.elo_rating" onbeforesave="updateUser('elo_rating', $data, participant.id, participant.elo_rating)">
+                            {[{ participant.elo_rating | number:2 }]}
+                        </a>
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="participant in all_participants" ts-repeat>
-                <td>
-                    <a href="#" ng-class="{ td_not_admin: not_admin }" id="participant_{[{ participant.id }]}_name" editable-text="participant.name" onbeforesave="updateUser('name', $data, participant.id, participant.name)">
-                        {[{ participant.name }]}
-                    </a>
-                </td>
-                <td>
-                    <a href="#" ng-class="{ td_not_admin: not_admin }" id="participant_{[{ participant.id }]}_surname" editable-text="participant.surname" onbeforesave="updateUser('surname', $data, participant.id, participant.surname)">
-                        {[{ participant.surname }]}
-                    </a>
-                </td>
-                <td>
-                    <a href="#" ng-class="{ td_not_admin: not_admin }" id="participant_{[{ participant.id }]}_age" editable-text="participant.age" onbeforesave="updateUser('age', $data, participant.id, participant.age)">
-                        {[{ participant.age }]}
-                    </a>
-                </td>
-                <td>
-                    <a href="#" ng-class="{ td_not_admin: not_admin }" id="participant_{[{ participant.id }]}_elo_rating" editable-text="participant.elo_rating" onbeforesave="updateUser('elo_rating', $data, participant.id, participant.elo_rating)">
-                        {[{ participant.elo_rating | number:2 }]}
-                    </a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-        <br>
-        <a ng-class="{ not_admin: not_admin, 'btn btn-default': admin  }">Add</a>
+                </tbody>
+            </table>
+        </div>
+        <div style="float: left; padding-left: 1%" ng-class="{ not_admin: not_admin, 'form-group': admin  }">
+            <form class="form-horizontal" ng-submit="addRow()">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <input placeholder="Name" type="text" class="form-control" name="name" ng-model="name" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <input placeholder="Surname" type="text" class="form-control" name="surname" ng-model="surname" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <input placeholder="Age" type="number" class="form-control" name="age" ng-model="age" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <input placeholder="Elo rating" type="number" class="form-control" name="elo_rating" ng-model="elo_rating" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <input style="" type="submit" class="btn btn-default" value="Add">
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
