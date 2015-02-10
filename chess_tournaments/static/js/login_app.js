@@ -1,7 +1,7 @@
 angular
     .module('LoginApp', ['ui.bootstrap', 'ngResource', 'ui.router'])
 
-    .config(['$httpProvider', function($httpProvider){
+    .config(['$httpProvider', function($httpProvider, $resourceProvider){
         $httpProvider.defaults.xsrfCookieName = 'csrftoken';
         $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
     }])
@@ -12,13 +12,13 @@ angular
         headers['Authorization'] = ('Basic ' + btoa(data.username + ':' + data.password));
     }
     return {
-        auth: $resource('/api/auth\\/', {}, {
+        auth: $resource('/api/auth/', {}, {
             login: {method: 'POST', transformRequest: add_auth_header},
             logout: {method: 'DELETE'}
-        }),
-        users: $resource('/api/users\\/', {}, {
+        }, { stripTrailingSlashes: false }),
+        users: $resource('/api/users/', {}, {
             create: {method: 'POST'}
-        })
+        }, { stripTrailingSlashes: false }) //need to cancel stripping of trailing slashes to make authentication work in all browsers
     };
 })
     .controller('authController', function($scope, api, $window){
@@ -55,7 +55,7 @@ angular
           size: size
         });
         modalInstance.result.then(function () {
-          $log.info('Modal dismissed at: ' + new Date());
+          $log.info('Logged in at: ' + new Date());
         });
       };
     $scope.log_out = function(){
