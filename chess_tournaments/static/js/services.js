@@ -38,7 +38,10 @@ angular.module('chess_app.services', [])
         };
 
         var delete_participant = function(id){
-            console.log(id);
+            return $http({
+                url: 'api/participants/' + id,
+                method: 'DELETE'
+            });
         };
 
         return {

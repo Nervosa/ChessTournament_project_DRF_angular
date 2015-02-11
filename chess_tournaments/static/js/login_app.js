@@ -1,11 +1,11 @@
 angular
     .module('LoginApp', ['ui.bootstrap', 'ngResource', 'ui.router'])
 
-    .config(['$httpProvider', function($httpProvider, $resourceProvider){
+    .config(['$httpProvider', '$resourceProvider', function($httpProvider, $resourceProvider){
         $httpProvider.defaults.xsrfCookieName = 'csrftoken';
         $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+        $resourceProvider.defaults.stripTrailingSlashes = false; //need to cancel stripping of trailing slashes to make authentication work in all browsers
     }])
-
     .factory('api', function($resource){
     function add_auth_header(data, headersGetter){
         var headers = headersGetter();
@@ -15,10 +15,10 @@ angular
         auth: $resource('/api/auth/', {}, {
             login: {method: 'POST', transformRequest: add_auth_header},
             logout: {method: 'DELETE'}
-        }, { stripTrailingSlashes: false }),
+        }),
         users: $resource('/api/users/', {}, {
             create: {method: 'POST'}
-        }, { stripTrailingSlashes: false }) //need to cancel stripping of trailing slashes to make authentication work in all browsers
+        })
     };
 })
     .controller('authController', function($scope, api, $window){
