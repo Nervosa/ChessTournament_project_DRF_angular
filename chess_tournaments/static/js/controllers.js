@@ -1,6 +1,6 @@
 angular.module('chess_app.controllers', [])
     .controller('ParticipantsController', ['$scope', 'participantsService', function($scope, participantsService){
-            $scope.updateUser = participantsService.updateUser;
+            $scope.update_participant = participantsService.update_participant;
             $scope.not_admin = ($scope.user === "Anonymous") ? true : false;
             $scope.admin = ($scope.user === "Anonymous") ? false : true;
             participantsService.all_participants().success(function(data){
