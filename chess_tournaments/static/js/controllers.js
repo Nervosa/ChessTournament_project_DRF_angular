@@ -10,7 +10,10 @@ angular.module('chess_app.controllers', [])
             $scope.add_participant = function(){
                 participantsService.add_participant($scope.name, $scope.surname, $scope.age, $scope.elo_rating)
                     .success(function(data){
-                        $scope.all_participants.push({'name': $scope.name,
+                        console.log(data);
+                        $scope.all_participants.push({
+                                                      'id': data['id'],
+                                                      'name': $scope.name,
                                                       'surname': $scope.surname,
                                                       'age': $scope.age,
                                                       'elo_rating': $scope.elo_rating});
