@@ -10,7 +10,6 @@ angular.module('chess_app.controllers', [])
             $scope.add_participant = function(){
                 participantsService.add_participant($scope.name, $scope.surname, $scope.age, $scope.elo_rating)
                     .success(function(data){
-                        console.log(data);
                         $scope.all_participants.push({'name': $scope.name,
                                                       'surname': $scope.surname,
                                                       'age': $scope.age,
@@ -26,14 +25,17 @@ angular.module('chess_app.controllers', [])
             $scope.delete_participant = function(id){
                 participantsService.delete_participant(id).success(
                 function(data){
-                    console.log(data);
-                    console.log('success!');
-                    $scope.all_participants.pop( {id: id} );
+                    participants_array = eval($scope.all_participants);
+                    for (var i=0; i<participants_array.length; i++){
+                        if (participants_array[i].id === id){
+                            $scope.all_participants.splice(i, 1);
+                            break;
+                        }
+                    }
                 }
             ).error(
                 function(err){
                     console.log(err);
-                    console.log('error!');
                 }
             );
             }
