@@ -22,7 +22,7 @@
             <div class="modal-header">
                 <h3 class="modal-title">Enter your credentials</h3>
             </div>
-            <div ng-controller="authController">
+            <div ng-controller="authController as authentication">
                 <div class="modal-body">
                     <form id="id_auth_form" ng-submit="login()">
                         {% csrf_token %}
@@ -30,10 +30,10 @@
                             test
                         </div>
                         <div class="form-group">
-                            <input focus-this ng-model="username" name="username" type="text" placeholder="Username" class="form-control">
+                            <input focus-this ng-model="creds.username" name="username" type="text" placeholder="Username" class="form-control">
                         </div>
                         <div class="form-group">
-                            <input ng-model="password" name="password" type="password" placeholder="Password" class="form-control">
+                            <input ng-model="creds.password" name="password" type="password" placeholder="Password" class="form-control">
                         </div>
                         <input class="btn btn-default" type="submit" value="Login">
                         <input class="btn btn-default" type="button" value="Cancel" ng-click="cancel()">

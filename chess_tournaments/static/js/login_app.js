@@ -22,13 +22,10 @@ angular
     };
 })
     .controller('authController', function($scope, api, $window){
-        $scope.getCredentials = function(){
-            return {username: $scope.username, password: $scope.password};
-        };
 
         $scope.login = function(){
             $('#id_auth_form input').checkAndTriggerAutoFillEvent();
-            api.auth.login($scope.getCredentials()).$promise.
+            api.auth.login(this.creds).$promise.
             then(function(data){
                 $scope.user = data.username; //when got valid username and password
                 $scope.ok();
