@@ -1,15 +1,6 @@
-angular.module('chess_app.services', [])
-    .service('tournamentsService', function($http){
-            var all_tournaments = function(){
-                return $http({
-                    url: '/api/tournaments',
-                    method: 'GET'
-                })
-            };
-
-            return {
-                all_tournaments: all_tournaments
-            }
+angular.module('chess_app.services', ['ngResource'])
+    .service('Tournaments', function TournamentsService($resource){
+            return $resource('api/tournaments/:id', {});
         }
 
     )

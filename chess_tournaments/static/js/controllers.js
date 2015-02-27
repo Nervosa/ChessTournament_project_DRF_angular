@@ -44,8 +44,8 @@ angular.module('chess_app.controllers', [])
             }
         }]
     )
-    .controller('showTournamentsCtrl', ['$scope', 'tournamentsService', function($scope, tournamentsService){
-            tournamentsService.all_tournaments().success(function(data){
-                $scope.all_tournaments = data;
-            })
+    .controller('showTournamentsCtrl', ['$scope', 'Tournaments', function($scope, Tournaments){
+
+                $scope.all_tournaments = Tournaments.query();
+
         }]);
